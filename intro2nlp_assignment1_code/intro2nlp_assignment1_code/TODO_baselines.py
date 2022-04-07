@@ -29,9 +29,9 @@ def majority_baseline(train_sentences, train_labels, testinput, testlabels):
 
 
 if __name__ == '__main__':
-    train_path = "data/preprocessed/train"
-    dev_path = "data/preprocessed/dev"
-    test_path = "data/preprocessed/test"
+    train_path = "data/preprocessed/train/"
+    dev_path = "data/preprocessed/dev/"
+    test_path = "data/preprocessed/test/"
 
     # Note: this loads all instances into memory. If you work with bigger files in the future, use an iterator instead.
 
@@ -41,16 +41,16 @@ if __name__ == '__main__':
     with open(train_path + "labels.txt") as label_file:
         train_labels = label_file.readlines()
 
-
     with open(dev_path + "sentences.txt") as dev_file:
         dev_sentences = dev_file.readlines()
 
     with open(train_path + "labels.txt") as dev_label_file:
         dev_labels = dev_label_file.readlines()
+
     with open(test_path + "sentences.txt") as testfile:
         testinput = testfile.readlines()
 
-    with open("test_path + labels.txt") as test_labelfile:
+    with open("test_path + labels.txt") as test_label_file:
         testlabels = test_label_file.readlines()
     majority_accuracy, majority_predictions = majority_baseline(train_sentences, train_labels, testinput)
 
