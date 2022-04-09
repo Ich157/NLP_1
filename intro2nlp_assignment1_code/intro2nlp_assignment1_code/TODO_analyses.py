@@ -19,7 +19,6 @@ typelist = []
 for line in train_sentences:
     line = nlp(line)
     for token in line:
-        print(token)
         tokensize+=1
         if token not in typelist:
             typelist.append(token)
