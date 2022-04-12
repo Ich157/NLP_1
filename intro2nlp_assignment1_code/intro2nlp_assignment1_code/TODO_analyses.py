@@ -15,17 +15,19 @@ if __name__ == '__main__':
 ### TOKENIZATION ###
 nlp = spacy.load("en_core_web_sm")
 tokensize = 0
-typelist = []
+typelist = {}
 for line in train_sentences:
     line = nlp(line)
     for token in line:
         tokensize+=1
+        if token in typelist.keys():
+            typelist[token] += 1
         if token not in typelist:
-            typelist.append(token)
+            typelist[token] = 1
         #print(token.text, token.pos_, token.dep_)
 
-print("Token size:", tokensize)
-print("Type size:", len(typelist))
+print("Token size:", tokensize) # 16130
+print("Type size:", typelist) # 16130
 #print(typelist)
 
 ### WORD CLASSES ###
