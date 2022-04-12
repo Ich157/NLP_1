@@ -118,6 +118,7 @@ elif question == 2:
 
 ### 4. LEMMATIZATION ###
 lemma_freq = {}
+lemma_tokens = {}
 lemma_tokens_lines = {}
 lemmas = []
 
@@ -127,23 +128,26 @@ for line in train_sentences:
         #print(token.text, token.lemma_)
         if token.lemma_ in lemma_freq:
             lemma_freq[token.lemma_] += 1
-            lemma_tokens_lines[token.lemma_] = lemma_tokens_lines[token.lemma_] + (token.text, line)
+            if token.text not in lemma_tokens[token.lemma_]:
+                lemma_tokens[token.lemma_].append(token.text)
+                lemma_tokens_lines[token.lemma_] = lemma_tokens_lines[token.lemma_] + (token.text, line)
         else:
             lemma_freq[token.lemma_] = 1
             lemmas.append(token.lemma_)
             lemma_tokens_lines[token.lemma_] = (token.text, line)
+            lemma_tokens[token.lemma_] = [token.text]
 
 frequent_lemma = 0
 inflections = []
 lines = []
 
 for lemma in lemmas:
-    if lemma_freq[lemma] > 2 and frequent_lemma == 0:
+    if len(lemma_tokens[lemma]) > 2 and frequent_lemma == 0:
         appearances = lemma_tokens_lines[lemma]
         inflections.append(appearances[0])
         inflections.append(appearances[1])
-        lines.append(appearances[2])
-        lines.append(appearances[3])
+        lines.append(appearances[6])
+        lines.append(appearances[7])
 
         frequent_lemma = (lemma, inflections, lines)
 
