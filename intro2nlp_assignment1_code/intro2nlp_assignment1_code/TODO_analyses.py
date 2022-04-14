@@ -279,5 +279,5 @@ elif question == 5:
     num_entities = sum(entities.values())
     num_labels = len(entities.keys())
 
-    print("Number of entities:", num_entities)
-    print("Number of different entity labels:", num_labels)
+    print("Number of entities:", num_entities) #1648
+    print("Number of different entity labels:", num_labels) #893
