@@ -19,7 +19,7 @@ if __name__ == '__main__':
 nlp = spacy.load("en_core_web_sm")
 
 # you can adjust the question number here
-question = 5
+question = 4
 
 if question == 1:
     ### 1. TOKENIZATION ###
@@ -227,7 +227,7 @@ elif question == 4:
         for token in line:
             # identify new lemmas, update dictionary
             if token.lemma_ in lemma_freq:
-                # safe frequency of each lemma
+                # save frequency of each lemma
                 lemma_freq[token.lemma_] += 1
                 if token.text not in lemma_tokens[token.lemma_]:
                     # save lemma and all its inflections
