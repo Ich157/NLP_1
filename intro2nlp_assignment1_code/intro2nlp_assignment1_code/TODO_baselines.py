@@ -8,6 +8,8 @@ import random
 from model.data_loader import DataLoader
 import collections
 from wordfreq import word_frequency as wf
+from sklearn.metrics import recall_score
+from sklearn.metrics import precision_score
 
 # Each baseline returns predictions for the test data. The length and frequency baselines determine a threshold using the development data.
 def safe_div(x,y):
@@ -16,7 +18,6 @@ def safe_div(x,y):
     return x / y
 
 def majority_baseline(train_sentences, train_labels, testinput, testlabels):
-    predictions = []
     all_labels = ''.join(train_labels)
     all_labels = all_labels.replace(" ","")
     majority_class = collections.Counter(all_labels).most_common(1)[0]
@@ -29,35 +30,22 @@ def majority_baseline(train_sentences, train_labels, testinput, testlabels):
     #testlabels is a list of stings, while predictions is a list of lists
     # so we convert testlabels into a list of lists
     testlabels = [list(word.replace(" ","").replace("\n","")) for word in testlabels]
-    tp = 0
-    tn = 0
-    fp = 0
-    fn = 0
+    correct = 0
     counter = 0
-    for i in range(len(testlabels)):
+    for i in range(len(predictions)):
         for j in range(len(testlabels[i])):
             counter = counter + 1
-            if testlabels[i][j] == 'C':
-                if predictions[i][j] == 'C':
-                    tp = tp + 1
-                else:
-                    fp = fp + 1
-            else:
-                if predictions[i][j] == 'N':
-                    tn = tn + 1
-                else:
-                    fn = fn + 1
-    return safe_div((tp+tn),counter), safe_div(tp,(tp+fp)),safe_div(tp,(tp+fn)),predictions
+            if testlabels[i][j] == predictions[i][j]:
+                correct = correct + 1
+
+        return correct/counter, predictions
 
 def random_baseline(train_sentences, train_labels, testinput, testlabels):
     n_times = 100
     all_labels = ''.join(train_labels)
     all_labels = all_labels.replace(" ","").replace("\n","")
     random_classes = set(all_labels)
-    tp = 0
-    tn = 0
-    fp = 0
-    fn = 0
+    correct = 0
     counter = 0
     # testlabels is a list of stings, while predictions is a list of lists
     # so we convert testlabels into a list of lists
@@ -68,30 +56,20 @@ def random_baseline(train_sentences, train_labels, testinput, testlabels):
             tokens = instance.split(" ")
             instance_predictions = [random.sample(random_classes,1)[0] for t in tokens]
             predictions.append(instance_predictions)
-        for i in range(len(testlabels)):
+        for i in range(len(predictions)):
             for j in range(len(testlabels[i])):
                 counter = counter + 1
-                if testlabels[i][j] == 'C':
-                    if predictions[i][j] == 'C':
-                        tp = tp + 1
-                    else:
-                        fp = fp + 1
-                else:
-                    if predictions[i][j] == 'N':
-                        tn = tn + 1
-                    else:
-                        fn = fn + 1
-    return safe_div((tp+tn),counter), safe_div(tp,(tp+fp)),safe_div(tp,(tp+fn)),predictions
+                if testlabels[i][j] == predictions[i][j]:
+                    correct = correct + 1
+
+            return correct/counter, predictions
 
 def length_baseline(train_sentences, train_labels, testinput, testlabels, threshold):
     all_labels = ''.join(train_labels)
     all_labels = all_labels.replace(" ","").replace("\n","")
     classes = set(all_labels)
     classes = list(classes)
-    tp = 0
-    tn = 0
-    fp = 0
-    fn = 0
+    correct = 0
     counter = 0
     # testlabels is a list of stings, while predictions is a list of lists
     # so we convert testlabels into a list of lists
@@ -101,31 +79,20 @@ def length_baseline(train_sentences, train_labels, testinput, testlabels, thresh
         tokens = instance.split(" ")
         instance_predictions = [[classes[0], classes[1]][len(t)>threshold] for t in tokens]
         predictions.append(instance_predictions)
-    for i in range(len(testlabels)):
+    for i in range(len(predictions)):
         for j in range(len(testlabels[i])):
             counter = counter + 1
-            if testlabels[i][j] == 'C':
-                if predictions[i][j] == 'C':
-                    tp = tp + 1
-                else:
-                    fp = fp + 1
-            else:
-                if predictions[i][j] == 'N':
-                    tn = tn + 1
-                else:
-                    fn = fn + 1
+            if testlabels[i][j] == predictions[i][j]:
+                correct = correct + 1
 
-    return safe_div((tp+tn),counter), safe_div(tp,(tp+fp)),safe_div(tp,(tp+fn)),predictions
+        return correct/counter, predictions
 
 def freq_baseline(train_sentences, train_labels, testinput, testlabels, threshold):
     all_labels = ''.join(train_labels)
     all_labels = all_labels.replace(" ","").replace("\n","")
     classes = set(all_labels)
     classes = list(classes)
-    tp = 0
-    tn = 0
-    fp = 0
-    fn = 0
+    correct = 0
     counter = 0
     # testlabels is a list of stings, while predictions is a list of lists
     # so we convert testlabels into a list of lists
@@ -135,21 +102,28 @@ def freq_baseline(train_sentences, train_labels, testinput, testlabels, threshol
         tokens = instance.split(" ")
         instance_predictions = [[classes[0], classes[1]][wf(t,"en")>threshold] for t in tokens]
         predictions.append(instance_predictions)
-    for i in range(len(testlabels)):
+    for i in range(len(predictions)):
         for j in range(len(testlabels[i])):
             counter = counter + 1
-            if testlabels[i][j] == 'C':
-                if predictions[i][j] == 'C':
-                    tp = tp + 1
-                else:
-                    fp = fp + 1
-            else:
-                if predictions[i][j] == 'N':
-                    tn = tn + 1
-                else:
-                    fn = fn + 1
-    return safe_div((tp + tn), counter), safe_div(tp, (tp + fp)), safe_div(tp, (tp + fn)), predictions
+            if testlabels[i][j]==predictions[i][j]:
+                correct = correct + 1
 
+    return safe_div(correct,counter),predictions
+
+def flat_list(list):
+    flat_list = []
+    for sublist in list:
+        for item in sublist:
+            flat_list.append(item)
+    return flat_list
+
+def flat_list_with_n(list):
+    flat_list = []
+    for sublist in list:
+        for item in sublist:
+            if not item=="\n" and not item==" ":
+                flat_list.append(item)
+    return flat_list
 
 if __name__ == '__main__':
     train_path = "data/preprocessed/train/"
@@ -177,43 +151,35 @@ if __name__ == '__main__':
         testlabels = test_label_file.readlines()
 
     print("test data")
-    majority_accuracy_test, majority_precision_test, majority_recall_test, majority_predictions = majority_baseline(train_sentences, train_labels, testinput, testlabels)
-    random_accuracy_test, random_precision_test, random_recall_test, random_predictions = random_baseline(train_sentences, train_labels, testinput, testlabels)
-    length_accuracy_test, length_precision_test, length_recall_test, length_predictions = length_baseline(train_sentences, train_labels, testinput, testlabels,2)
-    freq_accuracy_test, freq_precision_test, freq_recall_test, freq_predictions = freq_baseline(train_sentences, train_labels, testinput,testlabels, 0.00008)
+    majority_accuracy_test, majority_predictions = majority_baseline(train_sentences, train_labels, testinput, testlabels)
+    random_accuracy_test, random_predictions = random_baseline(train_sentences, train_labels, testinput, testlabels)
+    length_accuracy_test, length_predictions = length_baseline(train_sentences, train_labels, testinput, testlabels,2)
+    freq_accuracy_test, freq_predictions = freq_baseline(train_sentences, train_labels, testinput,testlabels, 0.00008)
     print("accuracy")
     print(majority_accuracy_test)
     print(random_accuracy_test)
     print(length_accuracy_test)
     print(freq_accuracy_test)
-    print("precision")
-    print(majority_precision_test)
-    print(random_precision_test)
-    print(length_precision_test)
-    print(freq_precision_test)
-    print("recall")
-    print(majority_recall_test)
-    print(random_recall_test)
-    print(length_recall_test)
-    print(freq_recall_test)
-    
+
     print("dev data")
-    majority_accuracy_dev, majority_precision_dev, majority_recall_dev, majority_predictions = majority_baseline(train_sentences, train_labels, dev_sentences, dev_labels)
-    random_accuracy_dev, random_precision_dev, random_recall_dev, random_predictions = random_baseline = random_baseline(train_sentences, train_labels, dev_sentences, dev_labels)
-    length_accuracy_dev, length_precision_dev, length_recall_dev, length_predictions = length_baseline(train_sentences, train_labels, dev_sentences, dev_labels,2)
-    freq_accuracy_dev, freq_precision_dev, freq_recall_dev, freq_predictions = freq_baseline(train_sentences, train_labels, dev_sentences, dev_labels,0.00008)
+    majority_accuracy_dev,  majority_predictions = majority_baseline(train_sentences, train_labels, dev_sentences, dev_labels)
+    random_accuracy_dev,  random_predictions = random_baseline = random_baseline(train_sentences, train_labels, dev_sentences, dev_labels)
+    length_accuracy_dev, length_predictions = length_baseline(train_sentences, train_labels, dev_sentences, dev_labels,2)
+    freq_accuracy_dev,  freq_predictions = freq_baseline(train_sentences, train_labels, dev_sentences, dev_labels,0.00008)
     print("accuracy")
     print(majority_accuracy_dev)
     print(random_accuracy_dev)
     print(length_accuracy_dev)
     print(freq_accuracy_dev)
-    print("precision")
-    print(majority_precision_dev)
-    print(random_precision_dev)
-    print(length_precision_dev)
-    print(freq_precision_dev)
+
     print("recall")
-    print(majority_recall_dev)
-    print(random_recall_dev)
-    print(length_recall_dev)
-    print(freq_recall_dev)
+    print(recall_score(flat_list_with_n(dev_labels),flat_list(random_predictions),average=None))
+    print(recall_score(flat_list_with_n(dev_labels), flat_list(majority_predictions), average=None))
+    print(recall_score(flat_list_with_n(dev_labels), flat_list(length_predictions), average=None))
+    print(recall_score(flat_list_with_n(dev_labels), flat_list(freq_predictions), average=None))
+    print("percision")
+    print(precision_score(flat_list_with_n(dev_labels),flat_list(random_predictions),average=None))
+    print(precision_score(flat_list_with_n(dev_labels), flat_list(majority_predictions), average=None))
+    print(precision_score(flat_list_with_n(dev_labels), flat_list(length_predictions), average=None))
+    print(precision_score(flat_list_with_n(dev_labels), flat_list(freq_predictions), average=None))
+
