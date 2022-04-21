@@ -153,6 +153,8 @@ if __name__ == '__main__':
     logging.info("Creating the dataset...")
 
     # load data
+    print(args)
+    print(args.data_dir)
     data_loader = DataLoader(args.data_dir, params)
     data = data_loader.load_data(['test'], args.data_dir)
     test_data = data['test']
