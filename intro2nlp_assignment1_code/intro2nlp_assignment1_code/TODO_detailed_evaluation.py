@@ -6,6 +6,7 @@ from sklearn.metrics import recall_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import f1_score
 from sklearn.metrics import classification_report
+import matplotlib as plt
 
 df = pd.read_csv("experiments/base_model/model_output2.tsv",sep='\t',header=None)
 df = df.dropna()
@@ -18,5 +19,11 @@ print(f1_score(label,predictions,average="weighted"))
 
 print(classification_report(label, predictions))
 
-#num_epochs = [1?, 2, 3, 5, 10, 20, 35, 50]
-# weightedF1= [0.71?, ,0.76, 0.83, 0.84, 0.84, 0.84, 0.84, ]
+#experimental results:
+num_epochs = [2, 3, 5, 10, 20, 35, 50]
+weightedF1= [0.75, 0.76, 0.83, 0.84, 0.84, 0.84, 0.84]
+
+ax = plt.pyplot.plot(num_epochs, weightedF1)
+ax = plt.pyplot.scatter(num_epochs, weightedF1)
+plt.pyplot.xlabel('num_epochs')
+plt.pyplot.ylabel('weighted F1 score')
