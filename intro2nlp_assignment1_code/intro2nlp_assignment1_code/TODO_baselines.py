@@ -10,6 +10,8 @@ import collections
 from wordfreq import word_frequency as wf
 from sklearn.metrics import recall_score
 from sklearn.metrics import precision_score
+from sklearn.metrics import f1_score
+from sklearn.metrics import classification_report
 
 # Each baseline returns predictions for the test data. The length and frequency baselines determine a threshold using the development data.
 def safe_div(x,y):
@@ -182,4 +184,23 @@ if __name__ == '__main__':
     print(precision_score(flat_list_with_n(dev_labels), flat_list(majority_predictions), average=None))
     print(precision_score(flat_list_with_n(dev_labels), flat_list(length_predictions), average=None))
     print(precision_score(flat_list_with_n(dev_labels), flat_list(freq_predictions), average=None))
+    print("f1")
+    print(f1_score(flat_list_with_n(dev_labels),flat_list(random_predictions),average=None))
+    print(f1_score(flat_list_with_n(dev_labels), flat_list(majority_predictions), average=None))
+    print(f1_score(flat_list_with_n(dev_labels), flat_list(length_predictions), average=None))
+    print(f1_score(flat_list_with_n(dev_labels), flat_list(freq_predictions), average=None))
+    print("f1 weighted")
+    print(f1_score(flat_list_with_n(dev_labels),flat_list(random_predictions),average="weighted"))
+    print(f1_score(flat_list_with_n(dev_labels), flat_list(majority_predictions), average="weighted"))
+    print(f1_score(flat_list_with_n(dev_labels), flat_list(length_predictions), average="weighted"))
+    print(f1_score(flat_list_with_n(dev_labels), flat_list(freq_predictions), average="weighted"))
 
+    print("report")
+    print("random")
+    print(classification_report(flat_list_with_n(dev_labels),flat_list(random_predictions)))
+    print("majority")
+    print(classification_report(flat_list_with_n(dev_labels), flat_list(majority_predictions)))
+    print("length")
+    print(classification_report(flat_list_with_n(dev_labels), flat_list(length_predictions)))
+    print("freq")
+    print(classification_report(flat_list_with_n(dev_labels), flat_list(freq_predictions)))
