@@ -7,7 +7,7 @@ from sklearn.metrics import precision_score
 from sklearn.metrics import f1_score
 from sklearn.metrics import classification_report
 
-df = pd.read_csv("experiments/base_model/model_output.tsv",sep='\t',header=None)
+df = pd.read_csv("experiments/base_model/model_output2.tsv",sep='\t',header=None)
 df = df.dropna()
 label = df.iloc[:, 1].to_numpy()
 predictions = df.iloc[:, 2].to_numpy()
@@ -17,3 +17,6 @@ print(f1_score(label,predictions,average=None))
 print(f1_score(label,predictions,average="weighted"))
 
 print(classification_report(label, predictions))
+
+#num_epochs = [1?, 2, 3, 5, 10, 20, 35, 50]
+# weightedF1= [0.71?, ,0.76, 0.83, 0.84, 0.84, 0.84, 0.84, ]

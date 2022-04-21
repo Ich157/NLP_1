@@ -182,7 +182,7 @@ if __name__ == '__main__':
     # reverse the vocab and tag dictionary to be able to map back from ids to words and tags
     id2word = {v: k for k, v in data_loader.vocab.items()}
     tags = {v: k for k, v in data_loader.tag_map.items()}
-    outfile = args.model_dir + "/model_output.tsv"
+    outfile = args.model_dir + "/model_output2.tsv"
     test_metrics = evaluate_and_output(model, loss_fn, test_data_iterator, metrics, num_steps, id2word, tags, outfile)
     save_path = os.path.join(args.model_dir, "metrics_test_{}.json".format(args.restore_file))
     utils.save_dict_to_json(test_metrics, save_path)
