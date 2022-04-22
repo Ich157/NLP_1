@@ -19,7 +19,7 @@ if __name__ == '__main__':
 nlp = spacy.load("en_core_web_sm")
 
 # you can adjust the question number here
-question = 4
+question = 5
 
 if question == 1:
     ### 1. TOKENIZATION ###
@@ -261,23 +261,27 @@ elif question == 4:
 elif question == 5:
     linecounter = 0
     entities = Counter()
+    entitylabels = Counter()
 
     for line in train_sentences:
         line = nlp(line)
         line_entities = []
+        line_labels = []
         for ent in line.ents:
             # save all entities
             line_entities.append(ent.text)
+            line_labels.append(ent.label_)
             if linecounter < 5:
                 # print entities of first 5 lines
                 print(line)
                 print(ent.text, ent.label_)
         entities.update(line_entities)
+        entitylabels.update(line_labels)
         linecounter += 1
 
     # calculate number of entities and entity labels
     num_entities = sum(entities.values())
-    num_labels = len(entities.keys())
+    num_labels = len(entitylabels.keys())
 
     print("Number of entities:", num_entities) #1648
-    print("Number of different entity labels:", num_labels) #893
+    print("Number of different entity labels:", num_labels) #17
