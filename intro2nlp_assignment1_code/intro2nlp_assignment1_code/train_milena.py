@@ -11,14 +11,14 @@ from tqdm import trange
 
 import utils
 import model.net as net
-from model.data_loader_milena import DataLoader
+from model.data_loader import DataLoader
 from evaluate import evaluate
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--data_dir', default='data/original/spanish',
+parser.add_argument('--data_dir', default='data/preprocessed/spanish',
                     help="Directory containing the dataset")
-parser.add_argument('--model_dir', default='experiments/base_model',
+parser.add_argument('--model_dir', default='experiments/spanish_model',
                     help="Directory containing params.json")
 parser.add_argument('--restore_file', default=None,
                     help="Optional, name of the file in --model_dir containing weights to reload before \
@@ -144,12 +144,12 @@ def train_and_evaluate(model, train_data, val_data, optimizer, loss_fn, metrics,
 
             # Save best val metrics in a json file in the model directory
             best_json_path = os.path.join(
-                model_dir, "metrics_val_best_weights_spanish.json")
+                model_dir, "metrics_val_best_weights.json")
             utils.save_dict_to_json(val_metrics, best_json_path)
 
         # Save latest val metrics in a json file in the model directory
         last_json_path = os.path.join(
-            model_dir, "metrics_val_last_weights_spanish.json")
+            model_dir, "metrics_val_last_weights.json")
         utils.save_dict_to_json(val_metrics, last_json_path)
 
 
