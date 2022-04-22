@@ -3,7 +3,7 @@ Zemilton	C	N
 Silva	N	N
 witnessed	C	N
 this	N	N
-happen	N	C
+happen	N	N
 to	N	N
 three	N	N
 men	N	N
@@ -46,13 +46,13 @@ say	N	N
 ,	N	N
 they	N	N
 were	N	N
-met	N	C
+met	N	N
 by	N	N
 gunfire	C	C
 and	N	N
 a	N	N
 standoff	C	N
-ensued	C	N
+ensued	C	C
 .	N	N
 ----------
 Prison	C	N
@@ -99,7 +99,7 @@ of	N	N
 a	N	N
 series	C	C
 of	N	N
-prison	C	C
+prison	C	N
 riots	C	C
 in	N	N
 prisons	C	N
@@ -108,14 +108,14 @@ Brazil	N	N
 ,	N	N
 dozens	C	N
 of	N	N
-inmates	C	C
+inmates	C	N
 ,	N	N
 mostly	N	N
 rival	C	C
 gangs	C	N
 ,	N	N
 were	N	N
-reported	N	C
+reported	N	N
 dead	N	N
 at	N	N
 the	N	N
@@ -125,8 +125,8 @@ of	N	N
 Alcaçuz	C	N
 ,	N	N
 a	N	N
-state	N	C
-prison	N	C
+state	N	N
+prison	N	N
 located	N	N
 in	N	N
 Natal	N	N
@@ -191,7 +191,7 @@ the	N	N
 Iraq	N	N
 and	N	N
 Afghanistan	C	N
-wars	N	C
+wars	N	N
 ,	N	N
 has	N	N
 already	N	N
@@ -240,7 +240,7 @@ police	N	N
 in	N	N
 Houston	N	N
 ,	N	N
-Texas	N	C
+Texas	N	N
 ,	N	N
 United	N	N
 States	N	N
@@ -260,7 +260,7 @@ the	N	N
 BBC	N	N
 ,	N	N
 this	N	N
-figure	N	C
+figure	N	N
 is	N	N
 triple	C	N
 the	N	N
@@ -278,7 +278,7 @@ Rights	N	N
 Watch	N	N
 of	N	N
 not	N	N
-taking	N	C
+taking	N	N
 adequate	C	N
 measures	N	N
 to	N	N
@@ -290,7 +290,7 @@ citizens	C	C
 .	N	N
 ----------
 Around	N	N
-21:00	N	N
+21:00	N	C
 local	N	N
 time	N	N
 ,	N	N
@@ -329,7 +329,7 @@ in	N	N
 days	N	N
 Yesterday	N	N
 ,	N	N
-mere	C	C
+mere	C	N
 days	N	N
 before	N	N
 he	N	N
@@ -380,7 +380,7 @@ death	N	N
 toll	C	C
 may	N	N
 have	N	N
-reached	N	N
+reached	N	C
 26	N	C
 .	N	N
 ----------
@@ -436,7 +436,7 @@ Robert	N	N
 Lewandowski	C	N
 signed	N	N
 a	N	N
-contract	C	C
+contract	C	N
 extension	C	C
 until	N	N
 June	N	N
