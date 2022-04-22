@@ -127,7 +127,7 @@ with open(trainfile, encoding="utf-8") as file:
 
         if sentence not in sentences and sentence not in errorsentences:
             sentences.append(sentence)
-            length_sentence = [0]*(len(sentence_nlp))
+            length_sentence = [0]*len(sentence)
             labels.append(length_sentence)
         else:
             if label == 1 and sentence not in errorsentences:
@@ -138,17 +138,19 @@ with open(trainfile, encoding="utf-8") as file:
 with open(outputpath + '/train/sentences.txt', 'w', encoding="utf-8") as f:
     for sentence in sentences:
         sentence = nlp(sentence)
-        item = str( )
+        item = ("")
         for token in sentence:
             item = item + " " + token.text
+        item = item[1:]
+        item = nlp(item)
         f.write("%s\n" % item)
 with open(outputpath + '/train/labels.txt', 'w', encoding="utf-8") as f:
     for label in labels:
-        item = str( )
+        item = str()
         for number in label:
             item = item + " " + str(number)
+        item = str(item[1:])
         f.write("%s\n" % item)
-
 
 # repeat for val data
 with open(devfile, encoding="utf-8") as file:
@@ -181,7 +183,7 @@ with open(devfile, encoding="utf-8") as file:
 
         if sentence not in sentences:
             sentences.append(sentence)
-            length_sentence = [0]*(len(sentence_nlp)-1)
+            length_sentence = [0]*len(sentence)
             labels.append(length_sentence)
         else:
             if label == 1:
@@ -192,15 +194,18 @@ with open(devfile, encoding="utf-8") as file:
 with open(outputpath + '/val/sentences.txt', 'w', encoding="utf-8") as f:
     for sentence in sentences:
         sentence = nlp(sentence)
-        item = str( )
+        item = ("")
         for token in sentence:
             item = item + " " + token.text
+        item = item[1:]
+        item = nlp(item)
         f.write("%s\n" % item)
 with open(outputpath + '/val/labels.txt', 'w', encoding="utf-8") as f:
     for label in labels:
-        item = str( )
+        item = str()
         for number in label:
             item = item + " " + str(number)
+        item = str(item[1:])
         f.write("%s\n" % item)
 
 # repeat for test data
@@ -233,8 +238,8 @@ with open(testfile, encoding="utf-8") as file:
 
 
         if sentence not in sentences:
-            sentences.append(sentence_nlp)
-            length_sentence = [0]*(len(sentence_nlp)-1)
+            sentences.append(sentence)
+            length_sentence = [0]*len(sentence_nlp)
             labels.append(length_sentence)
         else:
             if label == 1 and sentence not in errorsentences:
@@ -245,13 +250,16 @@ with open(testfile, encoding="utf-8") as file:
 with open(outputpath + '/test/sentences.txt', 'w', encoding="utf-8") as f:
     for sentence in sentences:
         sentence = nlp(sentence)
-        item = str( )
+        item = ("")
         for token in sentence:
             item = item + " " + token.text
+        item = item[1:]
+        item = nlp(item)
         f.write("%s\n" % item)
 with open(outputpath + '/test/labels.txt', 'w', encoding="utf-8") as f:
     for label in labels:
-        item = str( )
+        item = str()
         for number in label:
             item = item + " " + str(number)
+        item = str(item[1:])
         f.write("%s\n" % item)
