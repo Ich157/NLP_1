@@ -102,7 +102,7 @@ def freq_baseline(train_sentences, train_labels, testinput, testlabels, threshol
     predictions = []
     for instance in testinput:
         tokens = instance.split(" ")
-        instance_predictions = [[classes[0], classes[1]][wf(t,"en")>threshold] for t in tokens]
+        instance_predictions = [[classes[0], classes[1]][wf(t,"de")>threshold] for t in tokens]
         predictions.append(instance_predictions)
     for i in range(len(predictions)):
         for j in range(len(testlabels[i])):
@@ -128,9 +128,9 @@ def flat_list_with_n(list):
     return flat_list
 
 if __name__ == '__main__':
-    train_path = "data/preprocessed/train/"
-    dev_path = "data/preprocessed/val/"
-    test_path = "data/preprocessed/test/"
+    train_path = "data/preprocessed/german/train/"
+    dev_path = "data/preprocessed/german/val/"
+    test_path = "data/preprocessed/german/test/"
 
     # Note: this loads all instances into memory. If you work with bigger files in the future, use an iterator instead.
 
