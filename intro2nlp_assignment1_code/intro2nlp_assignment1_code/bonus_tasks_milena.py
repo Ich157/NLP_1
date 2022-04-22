@@ -105,6 +105,8 @@ with open(trainfile, encoding="utf-8") as file:
         sentenceword = sentence[beginword:endword]
         print(word)
         print(sentenceword)
+        if sentence not in sentences:
+            sentences.append(sentence)
 
 
 print(traindata)
