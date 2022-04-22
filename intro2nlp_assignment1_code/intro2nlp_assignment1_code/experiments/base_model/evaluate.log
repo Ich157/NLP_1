@@ -14,3 +14,7 @@
 2022-04-21 17:30:17,843:INFO: - done.
 2022-04-21 17:30:17,853:INFO: Starting evaluation
 2022-04-21 17:30:17,893:INFO: - Eval metrics : accuracy: 0.852 ; loss: 0.365
+2022-04-21 17:58:20,029:INFO: Creating the dataset...
+2022-04-21 17:58:20,034:INFO: - done.
+2022-04-21 17:58:20,038:INFO: Starting evaluation
+2022-04-21 17:58:20,085:INFO: - Eval metrics : accuracy: 0.852 ; loss: 0.365
