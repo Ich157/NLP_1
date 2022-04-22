@@ -9,7 +9,7 @@ import os
 parser = argparse.ArgumentParser()
 parser.add_argument('--min_count_word', default=1, help="Minimum count for words in the dataset", type=int)
 parser.add_argument('--min_count_tag', default=1, help="Minimum count for tags in the dataset", type=int)
-parser.add_argument('--data_dir', default='data/original/spanish', help="Directory containing the dataset")
+parser.add_argument('--data_dir', default='data/preprocessed/spanish', help="Directory containing the dataset")
 
 # Hyper parameters for the vocab
 PAD_WORD = '<pad>'
@@ -64,17 +64,17 @@ if __name__ == '__main__':
     # Build word vocab with train and test datasets
     print("Building word vocabulary...")
     words = Counter()
-    size_train_sentences = update_vocab(os.path.join(args.data_dir, 'Spanish_Train.tsv'), words)
-    size_dev_sentences = update_vocab(os.path.join(args.data_dir, 'Spanish_Dev.tsv'), words)
-    size_test_sentences = update_vocab(os.path.join(args.data_dir, 'Spanish_Test.tsv'), words)
+    size_train_sentences = update_vocab(os.path.join(args.data_dir, 'train/sentences.txt'), words)
+    size_dev_sentences = update_vocab(os.path.join(args.data_dir, 'val/sentences.txt'), words)
+    size_test_sentences = update_vocab(os.path.join(args.data_dir, 'test/sentences.txt'), words)
     print("- done.")
 
     # Build tag vocab with train and test datasets
     print("Building tag vocabulary...")
     tags = Counter()
-    size_train_tags = update_vocab(os.path.join(args.data_dir, 'Spanish_Train.tsv'), tags)
-    size_dev_tags = update_vocab(os.path.join(args.data_dir, 'Spanish_Dev.tsv'), tags)
-    size_test_tags = update_vocab(os.path.join(args.data_dir, 'Spanish_Test.tsv'), tags)
+    size_train_tags = update_vocab(os.path.join(args.data_dir, 'train/labels.txt'), tags)
+    size_dev_tags = update_vocab(os.path.join(args.data_dir, 'val/labels.txt'), tags)
+    size_test_tags = update_vocab(os.path.join(args.data_dir, 'test/labels.txt'), tags)
     print("- done.")
 
     # Assert same number of examples in datasets
@@ -110,7 +110,7 @@ if __name__ == '__main__':
         'pad_tag': PAD_TAG,
         'unk_word': UNK_WORD
     }
-    save_dict_to_json(sizes, os.path.join(args.data_dir, 'params.json'))
+    save_dict_to_json(sizes, os.path.join(args.data_dir, 'dataset_params.json'))
 
     # Logging sizes
     to_print = "\n".join("- {}: {}".format(k, v) for k, v in sizes.items())
